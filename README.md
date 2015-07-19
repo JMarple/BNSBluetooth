@@ -12,10 +12,10 @@ Includes:
   
 Connecting a HC05 to a Vex Cortex is not difficult at all.  
 The HC05 module commonly found online can be powered from a 5V source, and the TX/RX pins run at 3.3V, so no conversion is necessary from the Cortex to the module.
-For reprogramming it, connect the "key" pin to 5V before powering the cortex. (Disclaimer: this could potentionally damage your device as it's not made to run at 5V.  Use a voltage divider  down to 3.3V if you want to be safe). 
+For reprogramming it, connect the "key" pin to 5V before powering the cortex. (Disclaimer: this could potentionally damage your device as the key pin is not made to run at 5V.  Use a voltage divider down to 3.3V if you want to be safe). 
 
 See this picture: https://www.dropbox.com/s/ik6akelzv7fb1kv/IMG_4011.JPG?dl=0
-The black wire is (misleadingly) 5V, the red wire (also misleading) is ground.  The Green/Yellow wires are TX/RX wires which transmits the uart data.  The blue wire is the "key" which, when put set to 5V, puts the bluetooth dongle into the "reprogrammable state"
+The black wire is (misleadingly) 5V, the red wire (also misleading) is ground.  The Green/Yellow wires are TX/RX wires which transmits the uart data.  The blue wire is the "key" which, when when set to 3.3V/5V, puts the bluetooth dongle into the "reprogrammable state".
 
 Functions Cheatsheet: 
  * bnsSerialSend(UART1, "Hello Vex!"); // Sends a string over UART1
