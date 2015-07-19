@@ -1,0 +1,148 @@
+// ------------------------------------------------------------------------
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+// The author can be contacted by email at jmarple@umass.edu
+//
+// ------------------------------------------------------------------------
+
+// Sends data to the specified uart port.
+void bnsSerialSend(const TUARTs uart, const char* data)
+{
+	// Keep sending data until the next character is set to 0 (end of string).
+	while(*data != 0)
+	{
+	  sendChar(uart, *data);
+	  data++;
+	}
+}
+
+// Reads data from a specified uart port, saving it to the string "data".
+void bnsSerialRead(const TUARTs uart, char* data, int stringSize, int timeoutMilli)
+{
+	long startTime = nPgmTime;
+	int characterCounter = 0;
+
+	for (int i = 0; i < stringSize; i++)
+		data[i] = 0;
+
+	while (nPgmTime - startTime < timeoutMilli && characterCounter < stringSize)
+	{
+		short d = getChar(uart);
+
+		if (d != -1)
+		{
+			*data = d;
+			startTime = nPgmTime;
+			characterCounter++;
+			data++;
+		}
+	}
+}
+
+// A generic method for sending and recieving AT commands, communicating this data to the user.
+bool __bnsATCmd(const TUARTs uart, const string introMsg, const string cmd, const string errorMsg, const string goodMsg)
+{
+	char stringBuffer[100];
+	writeDebugStreamLine(introMsg);
+
+	bnsSerialSend(uart, cmd);
+	bnsSerialRead(uart, stringBuffer, 100, 1000);
+
+	if (stringBuffer[0] == 0)
+	{
+		writeDebugStreamLine(errorMsg);
+		return false;
+	}
+	else
+	{
+	  writeDebugStream(goodMsg);
+	  writeDebugStreamLine(stringBuffer);
+	  return true;
+	}
+}
+
+// Prints "OK" if there is a good connection.
+bool bnsATTestConnection(const TUARTs uart)
+{
+	return __bnsATCmd(uart,
+		"Testing Device Connection ...",
+		"AT\r\n",
+		"No AT Connection!",
+		" > AT Connection = ");
+}
+
+// Prints the version number to the debug stream.
+bool bnsATGetVersion(const TUARTs uart)
+{
+	return __bnsATCmd(uart,
+		"Asking device for version number...",
+		"AT+VERSION?\r\n",
+		"Error!",
+		" > AT Version = ");
+}
+
+// Prints the name to the debug stream.
+bool bnsATGetName(const TUARTs uart)
+{
+	return __bnsATCmd(uart,
+		"Asking device for name...",
+		"AT+NAME?\r\n",
+		"Error!",
+		" > AT Name = ");
+}
+
+// Sets the name of the HC05 module.
+bool bnsATSetName(const TUARTs uart, const string name)
+{
+	string strName;
+	stringFormat(strName, "AT+NAME=%s\r\n", name);
+
+	string strIntro = "Setting Name to ";
+	strcat(strIntro, name);
+
+	return __bnsATCmd(uart,
+		strIntro,
+		strName,
+		"Error!",
+		" > AT Name Status = ");
+}
+
+// Prints the baudrate currently set on the HC05 module.
+bool bnsATGetBaudrate(const TUARTs uart)
+{
+	return __bnsATCmd(uart,
+	  "Asking device for uart baudrate...",
+	  "AT+UART?\r\n",
+		"Error!",
+		" > AT UART Baudrate = ");
+}
+
+// Sets the baudrate for the HC05 module.
+bool bnsATSetBaudrate(const TUARTs uart, int baudrate, int stopbits, int parity)
+{
+	string strBaud;
+	stringFormat(strBaud, "AT+UART=%d,%d,%d\r\n", baudrate, stopbits, parity);
+
+	string strBaudrate;
+	stringFormat(strBaudrate, "%d...", baudrate);
+
+	string strIntro = "Setting baud = ";
+	strcat(strIntro, strBaudrate);
+
+	return __bnsATCmd(uart,
+	  strIntro,
+		strBaud,
+		"Error!",
+		" > AT Baudrate Status = ");
+}
