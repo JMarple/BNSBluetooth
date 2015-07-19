@@ -8,9 +8,9 @@ task main()
 	writeDebugStreamLine("Team BNS HC05 Bluetooth Demo!");
 	writeDebugStreamLine("Note: Ensure the 'Key' pin is disconnected and power has been cycled!");
 	writeDebugStreamLine("    : You will know you're in the right mode when the light flashes quickly.  When a device is connected, it will blink twice in a row, every so often");
-  writeDebugStreamLine("    : Also, ensure the baudrate set in the program matches what is programmed into the HC05!");
+	writeDebugStreamLine("    : Also, ensure the baudrate set in the program matches what is programmed into the HC05!");
 
-  // This should match what the AT command set the baudrate to!
+	// This should match what the AT command set the baudrate to!
 	setBaudRate(UART1, baudRate57600);
 
 	// Print out all data read from the uart port.
@@ -18,8 +18,8 @@ task main()
 	while(1==1)
 	{
 		// Read data from UART1, saving it to string "mySTring", with a timeout of 200ms.
-	  bnsSerialSend(UART1, "Foo!");
-    bnsSerialRead(UART1, myString, 100, 200);
-    writeDebugStream(myString);
-  }
+		bnsSerialSend(UART1, "Foo!");+
+		bnsSerialRead(UART1, myString, 100, 200);
+		writeDebugStream(myString);
+	}
 }
