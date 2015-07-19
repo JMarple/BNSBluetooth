@@ -16,6 +16,8 @@
 //
 // ------------------------------------------------------------------------
 
+#pragma systemFile
+
 // Sends data to the specified uart port.
 void bnsSerialSend(const TUARTs uart, const char* data)
 {

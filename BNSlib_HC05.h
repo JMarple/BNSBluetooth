@@ -16,6 +16,9 @@
 //
 // ------------------------------------------------------------------------
 
+#ifndef __BNSLIB_HC05_H__
+#define __BNSLIB_HC05_H__
+
 /**
  * Sends a string to a specified UART port.
  */
@@ -62,3 +65,5 @@ bool bnsATGetBaudrate(const TUARTs uart);
 bool bnsATSetBaudrate(const TUARTs uart, int baudrate, int stopbits, int parity);
 
 #include "BNSlib_HC05.c"
+
+#endif
