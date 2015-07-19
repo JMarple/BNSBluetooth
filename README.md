@@ -1,4 +1,4 @@
-# BNS Bluetooth Library for RobotC
+# BNS Bluetooth Library for RobotC 4.27
 
 This is a small library for being able to reprogram an HC05 Bluetooth Module using the Cortex.  
 This reduces the need for having an arduino or usb->uart dongle to reprogram the module.  
