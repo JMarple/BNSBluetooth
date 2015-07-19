@@ -5,6 +5,12 @@
 
 task main()
 {
+	// The way to reprogram a HC05 bluetooth module is through AT commands.  Typicall you
+  // need to have an arduino or usb->uart converter to reprogram the module, but this file
+  // allows you to reprogram them via the Vex Cortex.
+  // To send these commands, you need to set the module into an AT mode.  This is done by
+  // set the "key" pin to high (5V), which can be supplied by the cortex UART/I2C ports, or
+  // sensor ports.
 	writeDebugStreamLine("Team BNS HC05 AT Commands Demo!");
 	writeDebugStreamLine("Note: Ensure the 'Key' pin is connected to a 3.3V source (or 5V) and powercycle the HC05!");
 	writeDebugStreamLine("    : You will know you're in AT mode when the light blinks at ~2sec intervals.\n");

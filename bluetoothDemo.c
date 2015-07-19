@@ -18,7 +18,7 @@ task main()
 	while(1==1)
 	{
 		// Read data from UART1, saving it to string "mySTring", with a timeout of 200ms.
-		bnsSerialSend(UART1, "Foo!");+
+		bnsSerialSend(UART1, "Foo!");
 		bnsSerialRead(UART1, myString, 100, 200);
 		writeDebugStream(myString);
 	}
