@@ -67,7 +67,7 @@ bool bnsATSetBaudrate(const TUARTs uart, int baudrate, int stopbits, int parity)
 /**
  * Sets the PIN of the HC05
  */
-bool bnsATSetPIN(const TUARTs uart, int pin)
+bool bnsATSetPIN(const TUARTs uart, int pin);
 
 #include "BNSlib_HC05.c"
 
