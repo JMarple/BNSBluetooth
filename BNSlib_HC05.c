@@ -148,3 +148,53 @@ bool bnsATSetBaudrate(const TUARTs uart, int baudrate, int stopbits, int parity)
 		"Error!",
 		" > AT Baudrate Status = ");
 }
+
+// Sets the baudrate for the HC05 module.
+bool bnsATSetPIN(const TUARTs uart, int pin)
+{
+	string strPin;
+	stringFormat(strPin, "AT+UART=%d\r\n", pin);
+
+	return __bnsATCmd(uart,
+	  "Setting PIN...",
+		strPin,
+		"Error!",
+		" > AT Pin = ");
+}
+
+// Prints the role of this HC05 (1 = master, 0 = slave.
+bool bnsATGetRole(const TUARTs uart)
+{
+	return __bnsATCmd(uart,
+		"Asking device role...",
+		"AT+ROLE?\r\n",
+		"Error!",
+		" > AT Role = ");
+}
+
+// Prints the role of this HC05 (1 = master, 0 = slave.
+bool bnsATReset(const TUARTs uart)
+{
+	return __bnsATCmd(uart,
+		"Reseting...",
+		"AT+RESET?\r\n",
+		"Error!",
+		" > AT Reset = ");
+}
+
+void bnsDebugStream(char* str, float option1 = (-1), float option2 = (-1), float option3 = (-1))
+{
+  string sendingStr;
+  stringFormat(sendingStr, str, option1, option2, option3);
+
+  bnsSerialSend(UART1, (char*)&sendingStr);
+}
+
+void bnsDebugStreamLine(char* str, float option1 = (-1), float option2 = (-1), float option3 = (-1))
+{
+  string sendingStr;
+  stringFormat(sendingStr, str, option1, option2, option3);
+
+  bnsSerialSend(UART1, (char*)&sendingStr);
+  bnsSerialSend(UART1, "\n");
+}
