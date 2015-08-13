@@ -18,6 +18,8 @@
 
 #pragma systemFile
 
+
+
 // Sends data to the specified uart port.
 void bnsSerialSend(const TUARTs uart, const char* data)
 {
@@ -56,20 +58,20 @@ void bnsSerialRead(const TUARTs uart, char* data, int stringSize, int timeoutMil
 bool __bnsATCmd(const TUARTs uart, const string introMsg, const string cmd, const string errorMsg, const string goodMsg)
 {
 	char stringBuffer[100];
-	writeDebugStreamLine(introMsg);
+	//writeDebugStreamLine(introMsg);
 
 	bnsSerialSend(uart, cmd);
 	bnsSerialRead(uart, stringBuffer, 100, 1000);
 
 	if (stringBuffer[0] == 0)
 	{
-		writeDebugStreamLine(errorMsg);
+		//writeDebugStreamLine(errorMsg);
 		return false;
 	}
 	else
 	{
-	  writeDebugStream(goodMsg);
-	  writeDebugStreamLine(stringBuffer);
+	  //writeDebugStream(goodMsg);
+	  //writeDebugStreamLine(stringBuffer);
 	  return true;
 	}
 }
@@ -158,6 +160,19 @@ bool bnsATSetPIN(const TUARTs uart, int pin)
 	return __bnsATCmd(uart,
 	  "Setting PIN...",
 		strPin,
+		"Error!",
+		" > AT Pin = ");
+}
+
+// Sets the baudrate for the HC05 module.
+bool bnsATSetPassword(const TUARTs uart, int pass)
+{
+	string strPass;
+	stringFormat(strPass, "AT+UART=%d\r\n", pass);
+
+	return __bnsATCmd(uart,
+	  "Setting PIN...",
+		strPass,
 		"Error!",
 		" > AT Pin = ");
 }
