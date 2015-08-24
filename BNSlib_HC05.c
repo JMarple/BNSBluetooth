@@ -155,7 +155,7 @@ bool bnsATSetBaudrate(const TUARTs uart, int baudrate, int stopbits, int parity)
 bool bnsATSetPIN(const TUARTs uart, int pin)
 {
 	string strPin;
-	stringFormat(strPin, "AT+UART=%d\r\n", pin);
+	stringFormat(strPin, "AT+PIN=%d\r\n", pin);
 
 	return __bnsATCmd(uart,
 	  "Setting PIN...",
@@ -168,7 +168,7 @@ bool bnsATSetPIN(const TUARTs uart, int pin)
 bool bnsATSetPassword(const TUARTs uart, int pass)
 {
 	string strPass;
-	stringFormat(strPass, "AT+UART=%d\r\n", pass);
+	stringFormat(strPass, "AT+PSWD=%d\r\n", pass);
 
 	return __bnsATCmd(uart,
 	  "Setting PIN...",
