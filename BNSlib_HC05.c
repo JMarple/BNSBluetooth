@@ -58,20 +58,20 @@ void bnsSerialRead(const TUARTs uart, char* data, int stringSize, int timeoutMil
 bool __bnsATCmd(const TUARTs uart, const string introMsg, const string cmd, const string errorMsg, const string goodMsg)
 {
 	char stringBuffer[100];
-	//writeDebugStreamLine(introMsg);
+	writeDebugStreamLine(introMsg);
 
 	bnsSerialSend(uart, cmd);
 	bnsSerialRead(uart, stringBuffer, 100, 1000);
 
 	if (stringBuffer[0] == 0)
 	{
-		//writeDebugStreamLine(errorMsg);
+		writeDebugStreamLine(errorMsg);
 		return false;
 	}
 	else
 	{
-	  //writeDebugStream(goodMsg);
-	  //writeDebugStreamLine(stringBuffer);
+	  writeDebugStream(goodMsg);
+	  writeDebugStreamLine(stringBuffer);
 	  return true;
 	}
 }
