@@ -21,8 +21,13 @@
 
 /**
  * Sends a string to a specified UART port.
+ * Optionally, the size parameter (if provided) specifies how much data
+ * to read from the data buffer. If not provided or -1, then data is read
+ * until a null byte
+ *
+ * Returns the amount of data read from the "data" buffer
  */
-void bnsSerialSend(const TUARTs uart, const char* data);
+int bnsSerialSend(const TUARTs uart, const char* data, int size = (-1));
 
 /**
  * Reads data from the UART port.  After the last character, this function will wait
