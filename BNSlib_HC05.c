@@ -21,14 +21,21 @@
 
 
 // Sends data to the specified uart port.
-void bnsSerialSend(const TUARTs uart, const char* data)
+// Returns the amount of data read from the "data" buffer
+int bnsSerialSend(const TUARTs uart, const char* data, int size)
 {
+	int characterCounter = 0;
+
 	// Keep sending data until the next character is set to 0 (end of string).
-	while(*data != 0)
+	while((size > -1) ? (characterCounter < size)
+		              : (*data != 0))
 	{
 	  sendChar(uart, *data);
 	  data++;
+	  characterCounter++;
 	}
+
+	return characterCounter;
 }
 
 // Reads data from a specified uart port, saving it to the string "data".
