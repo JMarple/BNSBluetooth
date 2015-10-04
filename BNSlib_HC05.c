@@ -18,8 +18,6 @@
 
 #pragma systemFile
 
-
-
 // Sends data to the specified uart port.
 // Returns the amount of data read from the "data" buffer
 int bnsSerialSend(const TUARTs uart, const char* data, int size)
@@ -38,8 +36,11 @@ int bnsSerialSend(const TUARTs uart, const char* data, int size)
 	return characterCounter;
 }
 
-// Reads data from a specified uart port, saving it to the string "data".
-void bnsSerialRead(const TUARTs uart, char* data, int stringSize, int timeoutMilli)
+// Reads data from a specified uart port, saving it to the string "data"
+// stringSize: read at most this much data
+// timeoutMillis: stop trying to read data after this long
+// Returns the amount of data read into the "data" buffer
+int bnsSerialRead(const TUARTs uart, char* data, int stringSize, int timeoutMilli)
 {
 	long startTime = nPgmTime;
 	int characterCounter = 0;
@@ -59,6 +60,7 @@ void bnsSerialRead(const TUARTs uart, char* data, int stringSize, int timeoutMil
 			data++;
 		}
 	}
+	return characterCounter;
 }
 
 // A generic method for sending and recieving AT commands, communicating this data to the user.

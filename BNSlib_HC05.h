@@ -30,10 +30,13 @@
 int bnsSerialSend(const TUARTs uart, const char* data, int size = (-1));
 
 /**
- * Reads data from the UART port.  After the last character, this function will wait
- * the amount of milliseconds specified by timeoutMilli to ensure no data is missed.
+ * Reads data from the UART port into the buffer "data"
+ * Reads at most `stringSize` bytes, and will stop reading after
+ * `timeoutMilli` milliseconds without any new data.
+ *
+ * Returns the amount of bytes read into the buffer.
  */
-void bnsSerialRead(const TUARTs uart, char* data, int stringSize, int timeoutMilli);
+int bnsSerialRead(const TUARTs uart, char* data, int stringSize, int timeoutMilli);
 
 /**
  * This function will send the "AT\r\n" command, looking for an "OK" back from the
